@@ -1,25 +1,39 @@
-const button = document.getElementById("enterButton");
-const statusText = document.getElementById("status");
 
-button.addEventListener("click", () => {
-  const url = (window.NUVION_CONFIG?.VNC_URL || "").trim();
+import { auth } from "./firebase.js";
 
-  if (!url) {
-    statusText.textContent = "Ubuntu ainda não está conectado.";
-    statusText.style.color = "#fbbf24";
-    return;
-  }
+import {
+  onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
-  try {
-    const parsed = new URL(url);
+  const enterButton = document.getElementById("enterButton");
+  const status = document.getElementById("status");
 
-    if (parsed.protocol !== "https:") {
-      throw new Error("URL inválida");
-    }
+  let usuarioLogado = false;
+  let verificacaoConcluida = false;
 
-    window.location.href = parsed.href;
-  } catch {
-    statusText.textContent = "A URL do noVNC parece inválida.";
-    statusText.style.color = "#fca5a5";
-  }
-});
+  enterButton.disabled = true;
+
+  onAuthStateChanged(auth, (user) => {
+    usuarioLogado = !!user;
+      verificacaoConcluida = true;
+
+        enterButton.disabled = false;
+
+          status.textContent = usuarioLogado
+              ? "Sua conta está conectada. Clique para acessar seu PC."
+                  : "Entre ou crie uma conta para acessar seu PC.";
+                  });
+
+                  enterButton.addEventListener("click", () => {
+                    if (!verificacaoConcluida) {
+                        status.textContent = "Verificando sua conta...";
+                            return;
+                              }
+
+                                if (usuarioLogado) {
+                                    window.location.href = "pc.html";
+                                      } else {
+                                          window.location.href = "conta.html";
+                                            }
+                                            });
+                                            
