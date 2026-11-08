@@ -1,0 +1,112 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Meu PC | NuvionCloud</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #101827;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 450px;
+      padding: 28px;
+      background: #182438;
+      border: 1px solid #293b54;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    h1 span { color: #60a5fa; }
+
+    p { color: #aab8ca; }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 9px;
+      background: #3985ed;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary { background: #293b54; }
+
+    #status {
+      margin-top: 22px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Nuvion<span>Cloud</span></h1>
+    <h2>Meu computador</h2>
+
+    <p id="welcome">Verificando sua conta...</p>
+
+    <button id="connectButton" disabled>
+      INICIAR UBUNTU
+    </button>
+
+    <button id="logoutButton" class="secondary">
+      SAIR DA CONTA
+    </button>
+
+    <p id="status">
+      Seu ambiente Ubuntu ainda precisa ser conectado.
+    </p>
+  </main>
+
+  <script type="module">
+    import { auth } from "./firebase.js";
+
+    import {
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
+    const welcome = document.getElementById("welcome");
+    const status = document.getElementById("status");
+    const connectButton = document.getElementById("connectButton");
+    const logoutButton = document.getElementById("logoutButton");
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "conta.html";
+        return;
+      }
+
+      welcome.textContent = "Conectado como: " + user.email;
+      connectButton.disabled = false;
+    });
+
+    connectButton.addEventListener("click", () => {
+      status.textContent = "O servidor Ubuntu ainda não está conectado.";
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "conta.html";
+    });
+  </script>
+</body>
+</html>
