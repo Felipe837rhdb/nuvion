@@ -1,27 +1,58 @@
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101827">
-  <title>NuvionCloud</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <main class="shell">
-    <header class="brand"><span class="cloud">☁</span><span>Nuvion<span>Cloud</span></span></header>
-    <section class="hero">
-      <div class="eyebrow">SEU COMPUTADOR NA NUVEM</div>
-      <h1>Seu PC.<br><span>Em qualquer lugar.</span></h1>
-      <p>Acesse uma área de trabalho Ubuntu diretamente pelo navegador do seu celular.</p>
-      <button id="enterButton" type="button">
-        <span aria-hidden="true">▣</span> ENTRAR NO PC <span class="arrow">→</span>
-      </button>
-      <p class="hint" id="status">Área de trabalho remota pronta para conectar quando o servidor estiver configurado.</p>
-    </section>
-    <footer>NUVIONCLOUD <span>•</span> CLOUD DESKTOP</footer>
-  </main>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="theme-color" content="#101827">
+        <title>NuvionCloud</title>
+          <link rel="stylesheet" href="style.css">
+          </head>
+          <body>
+            <main class="shell">
+                <header class="brand">
+                      <span class="cloud">☁</span>
+                            <span>Nuvion<span>Cloud</span></span>
+                                </header>
+
+                                    <section class="hero">
+                                          <div class="eyebrow">SEU COMPUTADOR NA NUVEM</div>
+
+                                                <h1>Seu PC.<br><span>Em qualquer lugar.</span></h1>
+
+                                                      <p>
+                                                              Acesse uma área de trabalho Ubuntu
+                                                                      diretamente pelo navegador do seu celular.
+                                                                            </p>
+
+                                                                                  <button id="enterButton" type="button">
+                                                                                          <span aria-hidden="true">▣</span>
+                                                                                                  ENTRAR NO PC
+                                                                                                          <span class="arrow">→</span>
+                                                                                                                </button>
+
+                                                                                                                      <p class="hint" id="status">
+                                                                                                                              Preparando conexão com Ubuntu...
+                                                                                                                                    </p>
+                                                                                                                                        </section>
+
+                                                                                                                                            <footer>
+                                                                                                                                                  NUVIONCLOUD <span>•</span> CLOUD DESKTOP
+                                                                                                                                                      </footer>
+                                                                                                                                                        </main>
+
+                                                                                                                                                          <script>
+                                                                                                                                                              document.getElementById("enterButton").addEventListener("click", function() {
+                                                                                                                                                                    const status = document.getElementById("status");
+
+                                                                                                                                                                          status.textContent = "Conectando ao Ubuntu...";
+
+                                                                                                                                                                                window.location.href =
+                                                                                                                                                                                        "/vnc/vnc.html?autoconnect=true&host=" +
+                                                                                                                                                                                                window.location.hostname +
+                                                                                                                                                                                                        "&port=443&encrypt=1";
+                                                                                                                                                                                                            });
+                                                                                                                                                                                                              </script>
+                                                                                                                                                                                                              </body>
+                                                                                                                                                                                                              </html>
+                                                                                                                                                                                                              
